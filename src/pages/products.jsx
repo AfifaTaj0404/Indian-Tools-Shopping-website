@@ -7,7 +7,7 @@ function Products() {
         <li>Screwdriver Set</li>
         <li>Spanner</li>
         <li>Drill Machine</li>
-        <li>Hammer 2</li>
+        <li>Hammer 3</li>
       </ul>
     </div>
   );
