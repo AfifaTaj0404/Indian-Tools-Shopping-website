@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -9,18 +10,43 @@ import Cart from "./pages/cart";
 import Contact from "./pages/Contact";
 
 function App() {
+  // 🔹 Cart state (GLOBAL)
+  const [cartItems, setCartItems] = useState([]);
+
+  // 🔹 useEffect to track cart changes
+  useEffect(() => {
+    console.log("Cart updated:", cartItems);
+  }, [cartItems]);
+
   return (
     <div className="app-container">
-      <Navbar />
+      {/* Navbar */}
+      <Navbar cartCount={cartItems.length} />
 
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/cart" element={<Cart />} />
+
+          <Route
+            path="/products"
+            element={
+              <Products
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
+            }
+          />
+
+          <Route
+            path="/cart"
+            element={<Cart cartItems={cartItems} />}
+          />
+
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );
