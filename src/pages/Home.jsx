@@ -1,21 +1,42 @@
+import "./Home.css";
+import { useNavigate } from "react-router-dom";
+
 function Home() {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <div className="hero-section">
-        <img src="/Tools.png" alt="Indian Tools" />
+    <div className="home">
+
+
+      <div className="hero-image">
+        <img src="/tools1.png" alt="Indian Tools Banner" />
       </div>
+
+
       <div className="home-content">
-        <h1>Welcome to Indian Tools Store</h1>
+        <h1>Indian Tools</h1>
         <p>
-          We provide high quality Indian tools for construction, mechanical and
-          home use.
+          Your trusted destination for high-quality industrial and construction tools.
         </p>
+
+
+        <button
+          className="explore-btn"
+          onClick={() => navigate("/products")}
+        >
+          Explore Products
+        </button>
+
       </div>
-    </>
+    </div>
   );
 }
 
 export default Home;
+
+
+
+
 
 
 
