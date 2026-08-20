@@ -1,26 +1,50 @@
 import { useContext, useState, useEffect, useCallback } from "react";
 import { CartContext } from "../context/CartContext";
+import axios from "../utils/axiosInstance";
+import "../utils/socket";   // ✅ IMPORTANT: this loads WebSocket
 import "./Products.css";
 
 function Products() {
-
   const { addToCart } = useContext(CartContext);
 
+  const [products, setProducts] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-
   const [popupMsg, setPopupMsg] = useState("");
 
-  const products = [
-    { id: 1, name: "Drill Machine", price: 2500, image: "/src/assets/drill.jpg" },
-    { id: 2, name: "Hammer", price: 500, image: "/src/assets/hammer.jpg" },
-    { id: 3, name: "Angle Grinder", price: 3200, image: "/src/assets/grinder.jpg" },
-    { id: 4, name: "Electric Screwdriver", price: 1800, image: "/src/assets/screwdriver.jpg" }
-  ];
+  // 🔥 Fetch products
+  const fetchProducts = () => {
+    axios.get("/products").then((res) => {
+      setProducts(res.data);
+    });
+  };
 
-  const handleAddToCart = useCallback((product) => {
-    addToCart(product);
-    setPopupMsg(`${product.name} added to cart`); 
-  }, [addToCart]);
+  // Initial load
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // ✅ Listen for refresh event from WebSocket
+  useEffect(() => {
+    const handler = () => {
+      console.log("🔄 Refresh event received");
+      fetchProducts();
+    };
+
+    window.addEventListener("refresh-products", handler);
+
+    return () => {
+      window.removeEventListener("refresh-products", handler);
+    };
+  }, []);
+
+  const handleAddToCart = useCallback(
+    (product) => {
+      addToCart(product);
+      setPopupMsg(`${product.name} added to cart`);
+      setShowPopup(true);
+    },
+    [addToCart]
+  );
 
   useEffect(() => {
     if (showPopup) {
@@ -35,13 +59,21 @@ function Products() {
   return (
     <div className="products-container">
       <h1>Products</h1>
+
       {showPopup && <div className="popup">{popupMsg}</div>}
 
       <div className="products-grid">
-        {products.map(product => (
-          <div className="product-card" key={product.id}>
-
-            <img src={product.image} alt={product.name} />
+        {products.map((product) => (
+          <div className="product-card" key={product._id}>
+            <img
+              src={`/${product.image}`}
+              alt={product.name}
+              style={{
+                width: "150px",
+                height: "150px",
+                objectFit: "cover",
+              }}
+            />
 
             <h3>{product.name}</h3>
             <p className="price">₹{product.price}</p>
@@ -49,7 +81,6 @@ function Products() {
             <button onClick={() => handleAddToCart(product)}>
               Add to Cart
             </button>
-
           </div>
         ))}
       </div>
@@ -58,6 +89,9 @@ function Products() {
 }
 
 export default Products;
+
+
+
 
 
 

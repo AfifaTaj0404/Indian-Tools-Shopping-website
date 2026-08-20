@@ -1,0 +1,56 @@
+.navbar {
+  background: #0b5c66;
+  color: white;
+  padding: 14px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.nav-btn {
+  background: white;
+  color: #0b5c66 !important;
+  padding: 6px 12px;
+  border-radius: 5px;
+  margin-left: 15px;
+}
+
+.admin-btn {
+  background: #ffd166;
+  color: #0b5c66 !important;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.logout-btn {
+  margin-left: 15px;
+  background: crimson;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.welcome {
+  margin-left: 15px;
+  font-weight: 500;
+}
+

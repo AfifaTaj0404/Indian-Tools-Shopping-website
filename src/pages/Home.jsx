@@ -22,7 +22,7 @@ function Home() {
 
         <button
           className="explore-btn"
-          onClick={() => navigate("/products")}
+          onClick={() => navigate("/Products")}
         >
           Explore Products
         </button>
